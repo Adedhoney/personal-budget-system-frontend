@@ -1,23 +1,16 @@
 import React, { useState } from "react"
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import { doLogin } from "../shared/apicall"
 
 const Login: React.FC = () => {
-    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
-            const response = await axios.post(
-                "http://localhost:3000/login",
-                { username, password }
-            )
-            localStorage.setItem(
-                "token",
-                response.data.token
-            )
+            await doLogin({ email, password })
             navigate("/dashboard")
         } catch (error) {
             console.error("Login error:", error)
@@ -31,9 +24,9 @@ const Login: React.FC = () => {
                 <input
                     type="text"
                     placeholder="Username"
-                    value={username}
+                    value={email}
                     onChange={(e) =>
-                        setUsername(e.target.value)
+                        setEmail(e.target.value)
                     }
                     required
                 />

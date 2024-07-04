@@ -1,24 +1,18 @@
 import React, { useState } from "react"
+import { addRecord } from "../shared/apicall"
 
-interface Props {
-    addRecord: (record: {
-        date: string
-        description: string
-        category: string
-        amount: number
-    }) => void
-}
-
-const RecordForm: React.FC<Props> = ({ addRecord }) => {
+const RecordForm: React.FC = () => {
     const [date, setDate] = useState("")
     const [description, setDescription] = useState("")
     const [category, setCategory] = useState("income")
     const [amount, setAmount] = useState("")
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        addRecord({
-            date,
+        await addRecord({
+            date: Math.floor(
+                new Date(date).getTime() / 1000
+            ),
             description,
             category,
             amount: parseFloat(amount),

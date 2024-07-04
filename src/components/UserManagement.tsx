@@ -1,65 +1,44 @@
 import React, { useState, useEffect } from "react"
-import axios from "axios"
-
-interface User {
-    _id: string
-    username: string
-    active: boolean
-}
+import {
+    adminActivateUser,
+    adminDeleteUser,
+    adminGetUsers,
+    adminMakeUserAdmin,
+} from "../shared/apicall"
+import { User } from "../shared/redux"
 
 const UserManagement: React.FC = () => {
     const [users, setUsers] = useState<User[]>([])
 
+    const fetchUsers = async () => {
+        try {
+            const users = await adminGetUsers()
+            if (users) {
+                setUsers(users)
+            }
+        } catch (error) {}
+    }
+
     useEffect(() => {
-        const fetchUsers = async () => {
-            const response = await axios.get(
-                "http://localhost:3000/users",
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "token"
-                        )}`,
-                    },
-                }
-            )
-            setUsers(response.data)
-        }
-        fetchUsers()
+        fetchUsers
     }, [])
 
     const activateUser = async (id: string) => {
-        await axios.put(
-            `http://localhost:3000/users/${id}/activate`,
-            null,
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                        "token"
-                    )}`,
-                },
-            }
-        )
-        setUsers(
-            users.map((user) =>
-                user._id === id
-                    ? { ...user, active: true }
-                    : user
-            )
-        )
+        try {
+            await adminActivateUser(id)
+        } catch (error) {}
     }
 
     const deleteUser = async (id: string) => {
-        await axios.delete(
-            `http://localhost:3000/users/${id}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                        "token"
-                    )}`,
-                },
-            }
-        )
-        setUsers(users.filter((user) => user._id !== id))
+        try {
+            await adminDeleteUser(id)
+        } catch (error) {}
+    }
+
+    const makeAdmin = async (id: string) => {
+        try {
+            await adminMakeUserAdmin(id)
+        } catch (error) {}
     }
 
     return (
@@ -67,23 +46,29 @@ const UserManagement: React.FC = () => {
             <h2>User Management</h2>
             <ul>
                 {users.map((user) => (
-                    <li key={user._id}>
-                        {user.username} -{" "}
-                        {user.active
-                            ? "Active"
-                            : "Inactive"}
-                        {!user.active && (
+                    <li key={user.id}>
+                        {user.username} - {user.status}
+                        {user.status === "pending" && (
                             <button
                                 onClick={() =>
-                                    activateUser(user._id)
+                                    activateUser(user.id!)
                                 }
                             >
                                 Activate
                             </button>
                         )}
+                        {user.role === "user" && (
+                            <button
+                                onClick={() =>
+                                    makeAdmin(user.id!)
+                                }
+                            >
+                                Make Admin
+                            </button>
+                        )}
                         <button
                             onClick={() =>
-                                deleteUser(user._id)
+                                deleteUser(user.id!)
                             }
                         >
                             Delete
