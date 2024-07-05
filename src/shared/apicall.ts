@@ -12,6 +12,7 @@ import {
     store,
 } from './redux';
 import config from './config';
+import { errorMessage, successMessage } from './alert';
 
 const enum responseStatus {
     success = 'success',
@@ -28,11 +29,9 @@ export const signUp = async (signUpInfo: {
             `${config.BASE_BACKEND_URL}/account/sign-up`,
             { data: signUpInfo },
         );
-        if (response.data.status !== responseStatus.success) {
-            throw new Error(response.data.message);
-        }
+        successMessage(response.data.message);
     } catch (error) {
-        throw new Error((error as Error).message);
+        errorMessage(((error as AxiosError).response?.data as any).message);
     }
 };
 
@@ -45,15 +44,14 @@ export const doLogin = async (loginInfo: {
             `${config.BASE_BACKEND_URL}/account/login`,
             { data: loginInfo },
         );
-        if (response.data.status !== responseStatus.success) {
-            throw new Error(response.data.message);
-        }
+
+        successMessage(response.data.message);
         localStorage.setItem('token', response.data.data.token);
         store.dispatch(setAccessToken(response.data.data.token));
         store.dispatch(setUserInfo(response.data.data.user));
         store.dispatch(setUserRole(response.data.data.user.role));
     } catch (error) {
-        throw new Error((error as Error).message);
+        errorMessage(((error as AxiosError).response?.data as any).message);
     }
 };
 
@@ -64,11 +62,6 @@ export const getUser = async () => {
                 authorization: `Basic ${store.getState().app.accessToken}`,
             },
         });
-
-        if (response.data.status !== responseStatus.success) {
-            console.log(response.data.message);
-            throw new Error(response.data.message);
-        }
         store.dispatch(setUserInfo(response.data.data.user));
         store.dispatch(setUserRole(response.data.data.user.role));
     } catch (error) {
@@ -79,7 +72,6 @@ export const getUser = async () => {
         ) {
             logout();
         }
-        // throw error
     }
 };
 
@@ -95,15 +87,14 @@ export const addRecord = async (record: Record) => {
             },
         );
 
-        if (response.data.status !== responseStatus.success) {
-            throw new Error(response.data.message);
-        }
+        successMessage(response.data.message);
         store.dispatch(addNewRecord(response.data.data.record));
     } catch (error) {
         if ((error as Error).message === 'Unauthorized') {
             logout();
+        } else {
+            errorMessage(((error as AxiosError).response?.data as any).message);
         }
-        // throw error
     }
 };
 
@@ -160,13 +151,13 @@ export const updateRecord = async (record: Record, id: string) => {
             },
         );
 
-        if (response.data.status !== responseStatus.success) {
-            throw new Error(response.data.message);
-        }
+        successMessage(response.data.message);
         store.dispatch(setUpdateRecord(response.data.data.record));
     } catch (error) {
         if ((error as Error).message === 'Unauthorized') {
             logout();
+        } else {
+            errorMessage(((error as AxiosError).response?.data as any).message);
         }
         // throw error
     }
@@ -181,13 +172,14 @@ export const deleteRecord = async (id: string) => {
                 },
             },
         );
-        if (response.data.status !== responseStatus.success) {
-            throw new Error(response.data.message);
-        }
+
+        successMessage(response.data.message);
         store.dispatch(setDeleteRecord(response.data.data.record.id));
     } catch (error) {
         if ((error as Error).message === 'Unauthorized') {
             logout();
+        } else {
+            errorMessage(((error as AxiosError).response?.data as any).message);
         }
         // throw error
     }
@@ -248,13 +240,14 @@ export const adminActivateUser = async (id: string) => {
                 },
             },
         );
-        if (response.data.status !== responseStatus.success) {
-            throw new Error(response.data.message);
-        }
+
+        successMessage(response.data.message);
         return;
     } catch (error) {
         if ((error as Error).message === 'Unauthorized') {
             logout();
+        } else {
+            errorMessage(((error as AxiosError).response?.data as any).message);
         }
         // throw error
     }
@@ -274,10 +267,13 @@ export const adminMakeUserAdmin = async (id: string) => {
         if (response.data.status !== responseStatus.success) {
             throw new Error(response.data.message);
         }
+        successMessage(response.data.message);
         return;
     } catch (error) {
         if ((error as Error).message === 'Unauthorized') {
             logout();
+        } else {
+            errorMessage(((error as AxiosError).response?.data as any).message);
         }
         // throw error
     }
@@ -296,10 +292,13 @@ export const adminDeleteUser = async (id: string) => {
         if (response.data.status !== responseStatus.success) {
             throw new Error(response.data.message);
         }
+        successMessage(response.data.message);
         return;
     } catch (error) {
         if ((error as Error).message === 'Unauthorized') {
             logout();
+        } else {
+            errorMessage(((error as AxiosError).response?.data as any).message);
         }
         // throw error
     }

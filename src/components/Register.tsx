@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { signUp } from '../shared/apicall';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { errorMessage } from '../shared/alert';
 
 const Register: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -21,6 +22,11 @@ const Register: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (password !== confirmPassword) {
+            errorMessage(
+                'Make sure password and confirm password are the same',
+            );
+        }
         try {
             await signUp({ username, email, password });
 

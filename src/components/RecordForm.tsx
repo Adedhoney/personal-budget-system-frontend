@@ -15,6 +15,7 @@ const RecordForm: React.FC<{ handleToggle: any }> = (props: any) => {
             category,
             amount: parseFloat(amount),
         });
+        props.handleToggle();
         setDate('');
         setDescription('');
         setCategory('income');

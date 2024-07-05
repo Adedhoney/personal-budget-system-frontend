@@ -6,7 +6,7 @@ import RecordList from './RecordList';
 import MonthlyChart from './MonthlyChart';
 // import { logout } from '../shared/apicall';
 import { useNavigate } from 'react-router-dom';
-import { getUser } from '../shared/apicall';
+import { getUser, logout } from '../shared/apicall';
 
 const Dashboard: React.FC = () => {
     const [isFormOpen, setIsFormOpen] = useState(false);
@@ -34,17 +34,18 @@ const Dashboard: React.FC = () => {
             {' '}
             <div className="dashboard-container">
                 <h2>Dashboard</h2>
-                {role === 'admin' && (
-                    <button
-                        type="submit"
-                        className="management-button form-button"
-                        onClick={() => {
-                            navigate('user-management');
-                        }}
-                    >
-                        User Management
-                    </button>
-                )}
+                {role === 'admin' ||
+                    (role === 'superAdmin' && (
+                        <button
+                            type="submit"
+                            className="management-button form-button"
+                            onClick={() => {
+                                navigate('user-management');
+                            }}
+                        >
+                            User Management
+                        </button>
+                    ))}
 
                 <button
                     type="submit"
@@ -59,6 +60,15 @@ const Dashboard: React.FC = () => {
             <div className="record-container">
                 <RecordList />
             </div>
+            <button
+                type="submit"
+                className="logout"
+                onClick={() => {
+                    logout();
+                }}
+            >
+                Log out
+            </button>
         </>
     );
 };

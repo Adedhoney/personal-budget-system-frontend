@@ -31,9 +31,10 @@ git clone https://github.com/Adedhoney/personal-budget-system-frontend
 ## Setting up environments
 
 1. There is a file named `.env.example` on the root directory of the project
-2. Create a new file by copying & pasting the file on the root directory & rename it to just `.env`
-3. The `.env` file is already ignored, so your credentials inside it won't be committed
-4. Change the values of the file. Make changes of comment to the `.env.example` file while adding new constants to the `.env` file.
+2. Make sure to have the backend server running
+3. Create a new file by copying & pasting the file on the root directory & rename it to just `.env`
+4. The `.env` file is already ignored, so your credentials inside it won't be committed
+5. Change the values of the file. Make changes of comment to the `.env.example` file while adding new constants to the `.env` file.
 
 ## Run the project
 
@@ -48,3 +49,13 @@ git clone https://github.com/Adedhoney/personal-budget-system-frontend
     ```bash
     npm run dev
     ```
+
+## Approach and Assumptions
+
+I added the user status (active - pending), but I did not implement any restrictions on this, because I didn't build a notification system that will alert either the admin of a new user, or the user when an admin accepts them.
+
+Admins can accepts users, make users admin and or delete user. The superAdmin cannot be deleted
+
+I didnt add a edit user endpoint for the admin because there is not user information that the admin should have control over.
+
+Each records can be delete or edited
