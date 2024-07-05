@@ -47,6 +47,7 @@ const RecordList: React.FC = () => {
 
     const handleUpdateRecord = async (id: string) => {
         await updateRecord(updatedRecord, id);
+        setEditingRecordId(null);
     };
 
     return (
@@ -54,7 +55,7 @@ const RecordList: React.FC = () => {
             <h3>Records</h3>
             <ul>
                 {records.map((record) => (
-                    <li key={record.id}>
+                    <li key={record.id} className="record-list form-group">
                         {editingRecordId === record.id ? (
                             <>
                                 <input
@@ -98,12 +99,22 @@ const RecordList: React.FC = () => {
                             </>
                         ) : (
                             <>
-                                {record.date} - {record.description} -{' '}
-                                {record.category} - ${record.amount}
-                                <button onClick={() => handleEdit(record)}>
+                                <p>
+                                    {new Date(
+                                        record.date * 1000,
+                                    ).toLocaleDateString()}
+                                </p>
+                                <p>{record.description}</p>
+                                <p>{record.category}</p>
+                                <p>${record.amount}</p>
+                                <button
+                                    className="record-button"
+                                    onClick={() => handleEdit(record)}
+                                >
                                     Edit
                                 </button>
                                 <button
+                                    className="record-button"
                                     onClick={() => handleDelete(record.id!)}
                                 >
                                     Delete

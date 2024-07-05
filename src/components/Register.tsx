@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { signUp } from '../shared/apicall';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Register: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -7,10 +9,22 @@ const Register: React.FC = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const navigate = useNavigate();
+    const hasToken = useSelector(
+        (state: any) => state.app.accessToken as string,
+    );
+    useEffect(() => {
+        if (hasToken) {
+            navigate('/');
+        }
+    }, []);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             await signUp({ username, email, password });
+
+            navigate('/login');
             // should add awaiting animation later and one that will display error
         } catch (error) {
             console.error('Registration error:', error);

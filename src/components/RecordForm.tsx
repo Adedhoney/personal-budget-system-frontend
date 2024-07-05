@@ -60,15 +60,17 @@ const RecordForm: React.FC<{ handleToggle: any }> = (props: any) => {
                             required
                         />
                     </div>
-                    <button type="submit" className="form-button">
-                        Add New Record
-                    </button>
-                    <button
-                        onClick={props.handleToggle}
-                        className="form-button"
-                    >
-                        Cancel
-                    </button>
+                    <div className="button-div">
+                        <button type="submit" className="form-button">
+                            Add New Record
+                        </button>
+                        <button
+                            onClick={props.handleToggle}
+                            className="form-button"
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>

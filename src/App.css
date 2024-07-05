@@ -97,6 +97,15 @@ html {
     margin-bottom: 10px;
     color: #ffffffd2;
 }
+.form-group select {
+    width: 100%;
+    background: #535557;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: #ffffffd2;
+}
 
 .auth-form button {
     background: #2c3e50;
@@ -171,18 +180,81 @@ html {
 .add-record-button {
     position: absolute;
     right: 50px;
+    top: 40px;
+}
+.management-button {
+    position: absolute;
+    left: 30px;
+    top: 40px;
 }
 
 .record-form {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.8);
     padding: 20px;
     border-radius: 15px;
     width: 400px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.2);
 
+    z-index: 100; /* On top of everything */
+
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.button-div {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+.record-list {
+    width: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 0.5fr 0.5fr;
+    grid-gap: 10px;
+}
+.record-container {
+    margin: auto;
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    width: 80%;
+    max-width: 1200px;
+    height: 90%;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+}
+.record-button {
+    background: #2c3e50;
+
+    color: #fff;
+    border: none;
+    padding: 2px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+.user-list {
+    margin-top: 20px;
+    width: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+
+.greyed-out {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

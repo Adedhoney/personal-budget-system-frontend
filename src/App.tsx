@@ -6,7 +6,7 @@ import Register from './components/Register';
 
 import UserManagement from './components/UserManagement';
 import './App.css';
-import { setAccessToken, store } from './shared/redux';
+import { setAccessToken } from './shared/redux';
 import { useDispatch } from 'react-redux';
 
 const App: React.FC = () => {

@@ -1,17 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { doLogin } from '../shared/apicall';
+import { useSelector } from 'react-redux';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
+    const hasToken = useSelector(
+        (state: any) => state.app.accessToken as string,
+    );
+    useEffect(() => {
+        if (hasToken) {
+            navigate('/');
+        }
+    }, []);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             await doLogin({ email, password });
-            navigate('/dashboard');
+            navigate('/');
         } catch (error) {
             console.error('Login error:', error);
         }

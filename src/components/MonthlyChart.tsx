@@ -60,11 +60,37 @@ const MonthlyChart: React.FC = () => {
             },
         ],
     };
+    const options = {
+        plugins: {
+            legend: {
+                labels: {
+                    color: 'white', // Change the legend text color
+                },
+            },
+            title: {
+                display: true,
+                text: 'Monthly Income vs Expenses',
+                color: 'white', // Change the title text color
+            },
+        },
+        scales: {
+            x: {
+                ticks: {
+                    color: 'white', // Change x-axis text color
+                },
+            },
+            y: {
+                ticks: {
+                    color: 'white', // Change y-axis text color
+                },
+            },
+        },
+    };
 
     return (
         <div>
             <h3>Monthly Income vs. Expenses</h3>
-            <Bar data={data} />
+            <Bar data={data} options={options} />
         </div>
     );
 };

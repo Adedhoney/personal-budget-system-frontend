@@ -1,6 +1,7 @@
 const envs = ['BASE_BACKEND_URL', 'PORT', 'NODE_ENV'];
 
 envs.forEach((value, index) => {
+    value;
     if (import.meta.env[envs[index]]) {
         const message = 'Fatal Error: env ' + envs[index] + ' not defined';
 
