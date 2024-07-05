@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import RecordForm from './RecordForm';
 import RecordList from './RecordList';
+
 import MonthlyChart from './MonthlyChart';
 
 const Dashboard: React.FC = () => {

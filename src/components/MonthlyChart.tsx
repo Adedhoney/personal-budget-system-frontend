@@ -2,6 +2,10 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { useSelector } from 'react-redux';
 import { Record } from '../shared/redux';
+import Chart from 'chart.js/auto';
+import { CategoryScale } from 'chart.js';
+
+Chart.register(CategoryScale);
 
 const MonthlyChart: React.FC = () => {
     const records = useSelector(
@@ -9,37 +13,49 @@ const MonthlyChart: React.FC = () => {
     );
 
     const getMonthlyData = () => {
+        const months: Set<string> = new Set();
         const incomeData: { [key: string]: number } = {};
         const expenseData: { [key: string]: number } = {};
 
         records.forEach((record) => {
-            const date = new Date(record.date);
+            const date = new Date(record.date * 1000);
             const month = `${date.toLocaleString('default', {
                 month: 'short',
             })} ${date.getFullYear()}`;
             if (record.category === 'income') {
-                incomeData[month] = (incomeData[month] || 0) + record.amount;
+                incomeData[month] =
+                    (Number(incomeData[month]) || 0) + Number(record.amount);
+                expenseData[month] = expenseData[month] || 0;
+                months.add(month);
             } else {
-                expenseData[month] = (expenseData[month] || 0) + record.amount;
+                expenseData[month] =
+                    (Number(expenseData[month]) || 0) + Number(record.amount);
+                incomeData[month] = incomeData[month] || 0;
+
+                months.add(month);
             }
         });
 
-        return { incomeData, expenseData };
+        return { incomeData, expenseData, months };
     };
 
-    const { incomeData, expenseData } = getMonthlyData();
+    const { incomeData, expenseData, months } = getMonthlyData();
 
     const data = {
-        labels: Object.keys(incomeData),
+        labels: Array.from(months),
         datasets: [
             {
                 label: 'Income',
-                data: Object.values(incomeData),
+                data: Array.from(months).map((value) => {
+                    return incomeData[value];
+                }),
                 backgroundColor: 'rgba(75, 192, 192, 0.6)',
             },
             {
                 label: 'Expenses',
-                data: Object.values(expenseData),
+                data: Array.from(months).map((value) => {
+                    return expenseData[value];
+                }),
                 backgroundColor: 'rgba(255, 99, 132, 0.6)',
             },
         ],

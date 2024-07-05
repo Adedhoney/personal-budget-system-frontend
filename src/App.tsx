@@ -1,45 +1,34 @@
-import React from "react"
-import {
-    BrowserRouter as Router,
-    Route,
-    Routes,
-} from "react-router-dom"
-import Dashboard from "./components/Dashboard"
-import Login from "./components/Login"
-import Register from "./components/Register"
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import Login from './components/Login';
+import Register from './components/Register';
 
-import { Provider } from "react-redux"
-import UserManagement from "./components/UserManagement"
-import "./App.css"
-import { store } from "./shared/redux"
+import UserManagement from './components/UserManagement';
+import './App.css';
+import { setAccessToken, store } from './shared/redux';
+import { useDispatch } from 'react-redux';
 
 const App: React.FC = () => {
-    return (
-        <Provider store={store}>
-            <Router>
-                <div className="App">
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={<Login />}
-                        />
-                        <Route
-                            path="/register"
-                            element={<Register />}
-                        />
-                        <Route
-                            path="/dashboard"
-                            element={<Dashboard />}
-                        />
-                        <Route
-                            path="/user-management"
-                            element={<UserManagement />}
-                        />
-                    </Routes>
-                </div>
-            </Router>
-        </Provider>
-    )
-}
+    const dispatch = useDispatch();
+    const token = localStorage.getItem('token');
 
-export default App
+    dispatch(setAccessToken(token));
+    return (
+        <Router>
+            <div className="App">
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/" element={<Dashboard />} />
+                    <Route
+                        path="/user-management"
+                        element={<UserManagement />}
+                    />
+                </Routes>
+            </div>
+        </Router>
+    );
+};
+
+export default App;

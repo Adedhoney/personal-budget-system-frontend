@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Record } from '../shared/redux';
-import { deleteRecord, updateRecord } from '../shared/apicall';
+import { deleteRecord, getAllRecords, updateRecord } from '../shared/apicall';
 
 const RecordList: React.FC = () => {
+    useEffect(() => {
+        getAllRecords();
+    }, []);
+
     const records = useSelector(
         (state: any) => state.record.records as Record[],
     );
 
+    console.log(records);
     const [editingRecordId, setEditingRecordId] = useState<string | null>(null);
     const [updatedRecord, setUpdatedRecord] = useState<Omit<Record, 'id'>>({
         date: 0,
