@@ -12,17 +12,17 @@ const Dashboard: React.FC = () => {
     };
 
     return (
-        <div>
+        <div className="dashboard-container">
             <h2>Dashboard</h2>
-            <label>
-                <input
-                    type="checkbox"
-                    checked={isFormOpen}
-                    onChange={handleToggle}
-                />
-                {isFormOpen ? 'Close Form' : 'Open Form'}
-            </label>
-            {isFormOpen && <RecordForm />}
+
+            <button
+                type="submit"
+                className="add-record-button form-button"
+                onClick={handleToggle}
+            >
+                Add Record
+            </button>
+            {isFormOpen && <RecordForm handleToggle={handleToggle} />}
             <MonthlyChart />
             <RecordList />
         </div>
