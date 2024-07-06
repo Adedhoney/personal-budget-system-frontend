@@ -34,7 +34,7 @@ const Dashboard: React.FC = () => {
             {' '}
             <div className="dashboard-container">
                 <h2>Dashboard</h2>
-                {role !== 'user' || (
+                {role !== 'user' && (
                     <button
                         type="submit"
                         className="management-button form-button"

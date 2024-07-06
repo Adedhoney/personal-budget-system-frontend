@@ -190,10 +190,11 @@ html {
 }
 
 .record-form {
-    background: rgba(121, 121, 121, 0.8);
+    background: rgba(121, 121, 121, 1);
     padding: 20px;
     border-radius: 15px;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.2);
 
@@ -291,6 +292,7 @@ html {
     .dashboard-container {
         padding: 5px;
         width: 95%;
+        padding-bottom: 60px;
     }
     .record-container ul {
         padding: 5px;
@@ -307,6 +309,13 @@ html {
     .add-record-button {
         position: absolute;
         right: 10px;
-        top: 20px;
+        top: inherit;
+        bottom: 20px;
+    }
+    .management-button {
+        position: absolute;
+        right: 10px;
+        top: inherit;
+        bottom: 20px;
     }
 }
