@@ -47,6 +47,7 @@ export const doLogin = async (loginInfo: {
 
         successMessage(response.data.message);
         localStorage.setItem('token', response.data.data.token);
+        localStorage.setItem('role', response.data.data.user.role);
         store.dispatch(setAccessToken(response.data.data.token));
         store.dispatch(setUserInfo(response.data.data.user));
         store.dispatch(setUserRole(response.data.data.user.role));

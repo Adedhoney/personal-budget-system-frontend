@@ -34,18 +34,17 @@ const Dashboard: React.FC = () => {
             {' '}
             <div className="dashboard-container">
                 <h2>Dashboard</h2>
-                {role === 'admin' ||
-                    (role === 'superAdmin' && (
-                        <button
-                            type="submit"
-                            className="management-button form-button"
-                            onClick={() => {
-                                navigate('user-management');
-                            }}
-                        >
-                            User Management
-                        </button>
-                    ))}
+                {role !== 'user' || (
+                    <button
+                        type="submit"
+                        className="management-button form-button"
+                        onClick={() => {
+                            navigate('user-management');
+                        }}
+                    >
+                        User Management
+                    </button>
+                )}
 
                 <button
                     type="submit"

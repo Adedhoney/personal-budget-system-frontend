@@ -217,6 +217,9 @@ html {
     min-width: 500px;
     overflow-y: auto;
     display: grid;
+
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(172, 172, 172, 0.2);
     grid-template-columns: 1fr 2fr 1fr 1fr 0.5fr 0.5fr;
     grid-gap: 10px;
 }
@@ -269,6 +272,17 @@ html {
     background-color: red;
 }
 
+.grid-item {
+    text-align: left; /* Vertical line between items */
+
+    border-right: 1px solid rgba(187, 186, 186, 0.2);
+}
+
+/* Remove the right border from the last item in each row */
+.grid-row .grid-item:last-child {
+    border-right: none;
+}
+
 @media (max-width: 700px) {
     .record-container {
         padding: 5px;
@@ -295,7 +309,4 @@ html {
         right: 10px;
         top: 20px;
     }
-}
-
-@media screen {
 }

@@ -52,6 +52,8 @@ git clone https://github.com/Adedhoney/personal-budget-system-frontend
 
 ## Approach and Assumptions
 
+User cannot access the user management page and super admin cannot access the dashboard page. The admins can access both pages
+
 I added the user status (active - pending), but I did not implement any restrictions on this, because I didn't build a notification system that will alert either the admin of a new user, or the user when an admin accepts them.
 
 Admins can accepts users, make users admin and or delete user. The superAdmin cannot be deleted

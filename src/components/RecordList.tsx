@@ -59,18 +59,21 @@ const RecordList: React.FC = () => {
                         {editingRecordId === record.id ? (
                             <>
                                 <input
+                                    className="grid-item"
                                     type="date"
                                     name="date"
                                     value={updatedRecord.date}
                                     onChange={handleInputChange}
                                 />
                                 <input
+                                    className="grid-item"
                                     type="text"
                                     name="description"
                                     value={updatedRecord.description}
                                     onChange={handleInputChange}
                                 />
                                 <select
+                                    className="grid-item"
                                     name="category"
                                     value={updatedRecord.category}
                                     onChange={handleInputChange}
@@ -79,12 +82,14 @@ const RecordList: React.FC = () => {
                                     <option value="expense">Expense</option>
                                 </select>
                                 <input
+                                    className="grid-item"
                                     type="number"
                                     name="amount"
                                     value={updatedRecord.amount}
                                     onChange={handleInputChange}
                                 />
                                 <button
+                                    className="grid-item"
                                     onClick={() =>
                                         handleUpdateRecord(record.id!)
                                     }
@@ -92,6 +97,7 @@ const RecordList: React.FC = () => {
                                     Save
                                 </button>
                                 <button
+                                    className="grid-item"
                                     onClick={() => setEditingRecordId(null)}
                                 >
                                     Cancel
@@ -99,14 +105,16 @@ const RecordList: React.FC = () => {
                             </>
                         ) : (
                             <>
-                                <p>
+                                <p className="grid-item">
                                     {new Date(
                                         record.date * 1000,
                                     ).toLocaleDateString()}
                                 </p>
-                                <p>{record.description}</p>
-                                <p>{record.category}</p>
-                                <p>${record.amount}</p>
+                                <p className="grid-item">
+                                    {record.description}
+                                </p>
+                                <p className="grid-item">{record.category}</p>
+                                <p className="grid-item">{record.amount}</p>
                                 <button
                                     className="record-button"
                                     onClick={() => handleEdit(record)}

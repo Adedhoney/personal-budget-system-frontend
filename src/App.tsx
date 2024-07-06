@@ -6,14 +6,16 @@ import Register from './components/Register';
 
 import UserManagement from './components/UserManagement';
 import './App.css';
-import { setAccessToken } from './shared/redux';
+import { setAccessToken, setUserRole } from './shared/redux';
 import { useDispatch } from 'react-redux';
 
 const App: React.FC = () => {
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
 
     dispatch(setAccessToken(token));
+    dispatch(setUserRole(role));
     return (
         <Router>
             <div className="App">
