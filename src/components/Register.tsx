@@ -26,6 +26,7 @@ const Register: React.FC = () => {
             errorMessage(
                 'Make sure password and confirm password are the same',
             );
+            return;
         }
         try {
             await signUp({ username, email, password });
